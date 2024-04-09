@@ -6,21 +6,18 @@ int comparar(const void *a, const void *b) {
 }
 
 int main(int argc, char* argv[]){
-    char *nome_arquivo_entrada = argv[1];
-    FILE *arquivo_entrada = fopen(nome_arquivo_entrada, "r");
+    FILE *arquivo_entrada = fopen(argv[1], "r");
     if (arquivo_entrada == NULL) {
-        printf("Erro ao abrir o arquivo %s\n", nome_arquivo_entrada);
+        printf("Erro ao abrir o arquivo %s\n", argv[1]);
         return 1;
     }
-    printf("teste");
-
+    
     // Lê os números do arquivo e armazena em um vetor
-    int numeros[1001];
+    int malloc(sizof(int))
     int num_numeros = 0;
-    while (fscanf(arquivo_entrada, "%d", &numeros[num_numeros]) == 1) {
+    while (fscanf(arquivo_entrada, "%d", &numeros[num_numeros]) != EOF) {
         num_numeros++;
     }
-    printf("teste");
     
     // Ordena os números em ordem crescente
     qsort(numeros, num_numeros, sizeof(int), comparar);
