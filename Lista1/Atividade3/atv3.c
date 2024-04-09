@@ -13,14 +13,19 @@ int main(int argc, char* argv[]){
     }
     
     // Lê os números do arquivo e armazena em um vetor
-    int malloc(sizof(int))
+    int i;
     int num_numeros = 0;
-    while (fscanf(arquivo_entrada, "%d", &numeros[num_numeros]) != EOF) {
+    int *num;
+    while (fscanf(arquivo_entrada, "%d", &i) != EOF) {
         num_numeros++;
     }
-    
-    // Ordena os números em ordem crescente
-    qsort(numeros, num_numeros, sizeof(int), comparar);
+    num = malloc(sizeof(int)*num_numeros);
+
+    rewind(arquivo_entrada);
+    i = 0;
+    while( fscanf(arquivo_entrada, "%d\n", &num[i]) != EOF){
+        i++;
+    }
 
     // Cria o arquivo de saída
     FILE *arquivo_saida = fopen("saida.txt", "w");
@@ -28,11 +33,14 @@ int main(int argc, char* argv[]){
         printf("Erro ao criar o arquivo de saída.\n");
         return 1;
     }
+
+    qsort(num, num_numeros, sizeof(int), comparar);
+
+
     for (int i = 0; i < num_numeros; i++) {
-        fprintf(arquivo_saida, "%d\n", numeros[i]);
+        fprintf(arquivo_saida, "%d\n", num[i]);
     }
     
-
     printf("Arquivo de saída gerado com sucesso: saida.txt\n");
     return 0; 
     fclose(arquivo_saida);
