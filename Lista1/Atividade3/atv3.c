@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+
 int comparar(const void *a, const void *b) {
     return (*(int *)a - *(int *)b);
 }
@@ -15,7 +16,7 @@ int main(int argc, char* argv[]){
     // Lê os números do arquivo e armazena em um vetor
     int i;
     int num_numeros = 0;
-    int *num;
+    int num[MAXCHAR];
     while (fscanf(arquivo_entrada, "%d", &i) != EOF) {
         num_numeros++;
     }
