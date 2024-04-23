@@ -9,14 +9,12 @@ int main(int argc, char* argv[]){
         int valorx;
         float valory;
     } Ponto;
-    
+
     FILE *arquivo_entrada = fopen(argv[1], "r");
     if (arquivo_entrada == NULL) {
         printf("Erro ao abrir o arquivo %s\n", argv[1]);
         return 1;
     }
-
-    
 
     Ponto *lista_pontos;
     int num_numeros = 0;
@@ -26,6 +24,5 @@ int main(int argc, char* argv[]){
     printf("%s", i);
     
     fclose(arquivo_entrada);
-    
 }
     
