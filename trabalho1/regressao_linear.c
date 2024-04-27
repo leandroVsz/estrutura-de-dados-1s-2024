@@ -1,28 +1,72 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
-
-#define MAXCHAR 1000
+#include <string.h>
 
 int main(int argc, char* argv[]){
     typedef struct Ponto{
-        int valorx;
-        float valory;
+        int x;
+        float y;
     } Ponto;
 
-    FILE *arquivo_entrada = fopen(argv[1], "r");
-    if (arquivo_entrada == NULL) {
-        printf("Erro ao abrir o arquivo %s\n", argv[1]);
+
+    if(argc != 2) {
+        printf("Uso: %s <arquivo.csv>\n", argv[0]);
         return 1;
     }
 
-    Ponto *lista_pontos;
-    int num_numeros = 0;
-    while (fscanf(arquivo_entrada, "%s", &i) != EOF) {
-        num_numeros++;
+    FILE* arquivo = fopen(argv[1], "r");
+    if(arquivo == NULL) {
+        printf("Não foi possível abrir o arquivo.\n");
+        return 1;
     }
-    printf("%s", i);
+
+    // Conta o número de linhas no arquivo para determinar o tamanho do array
+    int tamanho = 0;
+    char linha[1024];
+    while(fgets(linha, sizeof(linha), arquivo))
+        tamanho++;
+    rewind(arquivo); 
+
+    // Aloca memória para o array de pontos
+    Ponto* pontos = (Ponto*) malloc(tamanho * sizeof(Ponto));
+    if(pontos == NULL) {
+        printf("Falha ao alocar memória.\n");
+        return 1;
+    }
+
+    // Lê os pontos do arquivo
+    int i = 0;
+    while(fgets(linha, sizeof(linha), arquivo)) {
+        pontos[i].x = atoi(strtok(linha, ","));
+        pontos[i].y = atof(strtok(NULL, ","));
+        i++;
+    }
+    fclose(arquivo);
+
+    // cálculo da média
+    int totalx = 0;
+    float totaly =0;
+    for (int j = 0; j < tamanho; j++){
+        totalx += pontos[j].x;
+        totaly += pontos[j].y;
+    }
+    int media_x = totalx / tamanho;
+    float media_y = totaly / (float)tamanho;
+
+    // cálculo da inclinação
+    float soma_cima = 0;
+    float soma_baixo = 0;
+    for (int j = 0; j < tamanho; j++){
+        soma_cima += (pontos[j].x - media_x) * (pontos[j].y - media_y);
+        soma_baixo += (pontos[j].x - media_x) * (pontos[j].x - media_x);
+    }
+
+    float inclina = soma_cima / soma_baixo;
+    int intercepta = media_y - inclina * media_x;
+    printf("y = %.1fx + %i", inclina, intercepta);
+
+    free(pontos);
     
-    fclose(arquivo_entrada);
+    exit(0);
 }
-    
