@@ -14,4 +14,4 @@ int verificar_ocorrencias(No* H, char valor_busca);
 void imprimir_inversa(No* H);
 void lista_inserir_no_i(No** L, int i, char valor);
 void lista_remover_no_i(No** H, int i);
-void lista_remover_no(No** H, char valor_busca);
+void lista_remover_no(No** H, char valor_busca);''
