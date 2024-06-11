@@ -46,3 +46,10 @@ int peek(Stack* stack) {
     }
     return stack->items[stack->top];
 }
+
+int main(void){
+    Stack* pilha = createStack();
+    push(pilha, 12);
+    int topo = peek(pilha);
+    printf("topo da pilha: %i", topo);
+}
